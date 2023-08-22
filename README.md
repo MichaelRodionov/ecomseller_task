@@ -67,7 +67,7 @@ celery -A src.tasks.db_write:celery worker --loglevel=info
 ``` python
 celery -A src.tasks.db_write:celery flower   
 ```
-Now you can follow all celery tasks and workers by the address ```http://localhost:5555```
+Now you can follow all celery tasks and workers by the address ```http://localhost:5555```    
 9) Start application in your IDE
 ``` python
 uvicorn src.main:app --host 0.0.0.0 --port 8000 
