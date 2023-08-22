@@ -17,7 +17,14 @@ result_router = APIRouter(prefix='/api/v1/result', tags=['results'])
 
 # ----------------------------------------------------------------
 @result_router.post('/{offer_id}')
-async def get_results(offer_id, request: Request):
+async def get_results(offer_id: int, request: Request):
+    """
+    Handler to get result from Ozon-seller API and send it for writing to database using celery task
+
+    Params:
+        - offer_id: vendor code of product
+        - request: http request
+    """
     ozon_auth_data = await request.json()
     ozon_api_response = requests.post(
         url='https://api-seller.ozon.ru/v1/product/info/description',
@@ -38,9 +45,5 @@ async def get_results(offer_id, request: Request):
         raise HTTPException(status_code=500, detail='Failed to save result')
     return result_struct
 
-
-@result_router.get('/fun')
-async def get_celery_result():
-    return 'Done'
-
+# ----------------------------------------------------------------
 app.include_router(result_router)
