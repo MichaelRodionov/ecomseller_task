@@ -1,0 +1,2 @@
+CELERY_IMPORTS = ('src.tasks',)
+CELERY_RESULT_SERIALIZER = 'json'
