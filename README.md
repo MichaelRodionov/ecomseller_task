@@ -4,6 +4,9 @@ ___
 <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54"/>     
 <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi"/>
 <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white"/>
+<img src="https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white"/>
+<img src="https://img.shields.io/badge/celery-%23316192.svg?style=for-the-badge&logo=celery&logoColor=white"/>
+<img src="https://img.shields.io/badge/alembic-%234DC730.svg?style=for-the-badge&logo=alembic&logoColor=white"/>   
 
 ___
 ## This application consists of:   
