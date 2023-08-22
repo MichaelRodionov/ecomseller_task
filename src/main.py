@@ -1,3 +1,5 @@
+from json import JSONDecodeError
+
 import requests
 from fastapi import FastAPI, APIRouter, HTTPException, Request
 
@@ -17,7 +19,7 @@ result_router = APIRouter(prefix='/api/v1/result', tags=['results'])
 
 # ----------------------------------------------------------------
 @result_router.post('/{offer_id}')
-async def get_results(offer_id: int, request: Request):
+async def get_results(offer_id: str, request: Request):
     """
     Handler to get result from Ozon-seller API and send it for writing to database using celery task
 
@@ -25,17 +27,20 @@ async def get_results(offer_id: int, request: Request):
         - offer_id: vendor code of product
         - request: http request
     """
-    ozon_auth_data = await request.json()
+    try:
+        ozon_auth_data = await request.json()
+    except JSONDecodeError:
+        raise HTTPException(status_code=400, detail='Client-Id and Api-Key params are required')
     ozon_api_response = requests.post(
         url='https://api-seller.ozon.ru/v1/product/info/description',
         headers={
-            'Api-Key': ozon_auth_data['Api-Key'],
-            'Client-Id': ozon_auth_data['Client-Id']
+            'Api-Key': ozon_auth_data.get('Api-Key'),
+            'Client-Id': ozon_auth_data.get('Client-Id')
         },
         json={"offer_id": offer_id}
     )
     if ozon_api_response.status_code != 200:
-        raise HTTPException(status_code=ozon_api_response.status_code, detail='Ozon API request failed')
+        raise HTTPException(status_code=ozon_api_response.status_code, detail=ozon_api_response.json()['message'])
     result = ozon_api_response.json()['result']
     result['item_id'] = result.pop('id')
     result_struct = ResultStruct(**result).model_dump()
