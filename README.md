@@ -47,9 +47,6 @@ git push  # push to repository
 4) Create and activate virtual environment   
 5) Create local `.env` file with the next data:  
 ``` python
-SECRET_KEY='your django key'
-DATABASE_URL=postgres://postgres:postgres@db/todo_list
-DEBUG=False
 DB_USER = 'your db user'
 DB_PASSWORD = 'your db password'
 DB_HOST = 'your db host'
