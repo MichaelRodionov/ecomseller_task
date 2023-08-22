@@ -47,7 +47,7 @@ async def get_results(offer_id: str, request: Request):
     try:
         add_result_db.delay(result_struct)
     except Exception as e:
-        raise HTTPException(status_code=500, detail='Failed to save result')
+        raise HTTPException(status_code=400, detail='Failed to save result')
     return result_struct
 
 # ----------------------------------------------------------------
